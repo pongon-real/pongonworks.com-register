@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evil Pongon Game - Login</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: #0e0b18;
+  color: #c0b4d8;
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+a { color: #9955cc; text-decoration: none; }
+a:hover { color: #bb77ff; text-decoration: underline; }
+
+img { border: 0; }
+
+/* ── HEADER ── */
+#header {
+  background: #09060f;
+  border-bottom: 1px solid #1e1535;
+  padding: 0;
+}
+
+#header-content {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 8px 8px 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.site-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 8px;
+  text-decoration: none;
+}
+
+.site-logo img {
+  width: 52px;
+  height: 52px;
+  image-rendering: pixelated;
+}
+
+.site-logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.site-name {
+  font-size: 20px;
+  font-weight: bold;
+  font-family: 'Times New Roman', Georgia, serif;
+  color: #e2d8f8;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+}
+
+.site-name .evil { color: #8833cc; }
+
+.site-tagline {
+  font-size: 10px;
+  color: #3d2f5a;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* header login widget */
+.header-login {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  padding-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.header-login label { color: #5a4a7a; white-space: nowrap; }
+
+.header-login input[type=text],
+.header-login input[type=password] {
+  background: #130e22;
+  border: 1px solid #2c2245;
+  color: #c8b8e8;
+  padding: 3px 5px;
+  font-size: 11px;
+  font-family: Verdana, Arial, sans-serif;
+  width: 105px;
+}
+
+.header-login input:focus { outline: none; border-color: #6622aa; }
+
+.btn-login {
+  background: linear-gradient(to bottom, #3d1870 0%, #260f48 100%);
+  border: 1px solid #5a2a99;
+  color: #e8d8ff;
+  padding: 3px 9px;
+  font-size: 11px;
+  font-family: Verdana, Arial, sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-login:hover { background: linear-gradient(to bottom, #4d2088 0%, #311260 100%); }
+
+.header-login .vsep { color: #241c38; margin: 0 1px; }
+
+.remember-wrap {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  color: #3d2f5a;
+  white-space: nowrap;
+}
+
+/* ── NAVBAR ── */
+#navbar {
+  background: linear-gradient(to bottom, #130e24 0%, #0e0a1c 100%);
+  border-top: 1px solid #1e1838;
+  border-bottom: 2px solid #060410;
+}
+
+#navbar ul {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 6px;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#navbar ul > li { position: relative; }
+
+#navbar ul > li > a,
+#navbar ul > li > span {
+  display: block;
+  padding: 8px 13px;
+  color: #9988bb;
+  font-size: 11px;
+  font-weight: bold;
+  text-decoration: none;
+  border-right: 1px solid #1c1630;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+#navbar ul > li > a:hover,
+#navbar ul > li > span:hover {
+  background: #18102e;
+  color: #cc88ff;
+  text-decoration: none;
+}
+
+.nav-arrow { font-size: 8px; color: #3d2f5a; margin-left: 3px; }
+
+.nav-drop {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #0f0b1e;
+  border: 1px solid #2a1f48;
+  border-top: 2px solid #5522aa;
+  min-width: 175px;
+  z-index: 200;
+  box-shadow: 3px 3px 8px rgba(0,0,0,0.8);
+}
+
+#navbar ul > li:hover .nav-drop { display: block; }
+
+.nav-drop-section {
+  padding: 4px 0 2px;
+  border-bottom: 1px solid #1a1430;
+}
+.nav-drop-section:last-child { border-bottom: none; }
+
+.nav-drop-label {
+  padding: 2px 11px 3px;
+  font-size: 10px;
+  color: #352858;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.nav-drop a {
+  display: block;
+  padding: 4px 11px;
+  color: #7a6899;
+  font-size: 11px;
+  text-decoration: none;
+}
+
+.nav-drop a:hover { background: #18102e; color: #cc88ff; text-decoration: none; }
+
+/* ── PAGE ── */
+#page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 10px 8px 28px;
+}
+
+#breadcrumb {
+  background: #0c091a;
+  border: 1px solid #1a1530;
+  padding: 5px 10px;
+  margin-bottom: 8px;
+  font-size: 11px;
+  color: #3d2f5a;
+  display: flex;
+  align-items: center;
+}
+
+#breadcrumb a { color: #5a4a7a; }
+#breadcrumb a:hover { color: #9955cc; text-decoration: none; }
+.bsep { margin: 0 5px; color: #2a2040; }
+.bcur { color: #b8a8d8; }
+
+#online-bar {
+  background: #0b0818;
+  border: 1px solid #181230;
+  padding: 4px 10px;
+  margin-bottom: 9px;
+  font-size: 11px;
+  color: #3d2f5a;
+}
+
+#online-bar .dot { color: #44aa66; }
+#online-bar a { color: #6a5a8a; }
+#online-bar a:hover { color: #9955cc; text-decoration: none; }
+
+.tabs { display: flex; margin-bottom: 0; }
+
+.tab {
+  padding: 6px 18px;
+  background: #0c091a;
+  border: 1px solid #1a1530;
+  border-bottom: none;
+  color: #5a4a7a;
+  font-size: 11px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  margin-right: 2px;
+  position: relative;
+  bottom: -1px;
+  display: inline-block;
+}
+
+.tab:hover { color: #9955cc; background: #110d22; text-decoration: none; }
+
+.tab.on {
+  background: #180f30;
+  border-color: #3d1e70;
+  border-bottom: 1px solid #180f30;
+  color: #cc99ff;
+  bottom: -1px;
+}
+
+.sec { display: none; }
+.sec.on { display: block; }
+
+.panel {
+  border: 1px solid #1e1535;
+  margin-top: 10px;
+}
+
+.panel-hd {
+  background: linear-gradient(to right, #220f44 0%, #160a2e 55%, #110d20 100%);
+  border-bottom: 1px solid #331566;
+  padding: 6px 11px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #d8c4f8;
+}
+
+.panel-hd .ico { color: #8833cc; margin-right: 6px; font-size: 9px; }
+
+.panel-bd { background: #0f0c1e; padding: 14px 14px; }
+
+.ftable { width: 100%; border-collapse: collapse; }
+
+.ftable tr { border-bottom: 1px solid #181230; }
+.ftable tr:last-child { border-bottom: none; }
+
+.ftable .lbl {
+  padding: 9px 11px;
+  background: #0b0818;
+  color: #7a6898;
+  font-size: 11px;
+  font-weight: bold;
+  width: 210px;
+  vertical-align: top;
+  border-right: 1px solid #181230;
+}
+
+.ftable .fld {
+  padding: 9px 11px;
+  background: #0f0c1e;
+}
+
+.fnote { font-size: 10px; color: #3d2f5a; margin-top: 4px; }
+.req { color: #8833cc; }
+
+input[type=text], input[type=password], input[type=email] {
+  background: #09060f;
+  border: 1px solid #241c40;
+  color: #ccbbee;
+  padding: 5px 7px;
+  font-size: 12px;
+  font-family: Verdana, Arial, sans-serif;
+  width: 255px;
+}
+
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus {
+  outline: none;
+  border-color: #5522aa;
+  background: #0c091a;
+}
+
+input[type=checkbox] { vertical-align: middle; }
+
+.form-foot {
+  padding: 9px 11px;
+  background: #0b0818;
+  border-top: 1px solid #181230;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-sub {
+  background: linear-gradient(to bottom, #4a1e88 0%, #2d1055 100%);
+  border: 1px solid #6633aa;
+  color: #f0e4ff;
+  padding: 5px 16px;
+  font-size: 12px;
+  font-family: Verdana, Arial, sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-sub:hover { background: linear-gradient(to bottom, #5a26a0 0%, #391464 100%); }
+
+.foot-note { color: #3d2f5a; font-size: 11px; }
+.foot-link { font-size: 11px; color: #5a4a7a; margin-left: auto; }
+.foot-link:hover { color: #9955cc; }
+
+.agree-box {
+  background: #09060f;
+  border: 1px solid #1a1430;
+  padding: 9px 11px;
+  font-size: 11px;
+  color: #4a3a6a;
+  line-height: 1.75;
+  max-height: 155px;
+  overflow-y: scroll;
+  margin-bottom: 10px;
+}
+
+.agree-box::-webkit-scrollbar { width: 7px; }
+.agree-box::-webkit-scrollbar-track { background: #0f0c1e; }
+.agree-box::-webkit-scrollbar-thumb { background: #3d1870; }
+
+/* ── FOOTER ── */
+#footer {
+  background: #07050e;
+  border-top: 2px solid #130e22;
+  margin-top: 22px;
+  padding: 18px 0 0;
+}
+
+#footer-cols {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 8px 14px;
+  display: flex;
+  gap: 40px;
+  border-bottom: 1px solid #110e20;
+  flex-wrap: wrap;
+}
+
+.fcol h4 {
+  color: #8833cc;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 7px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #1e1838;
+}
+
+.fcol p { color: #3d2f5a; font-size: 11px; line-height: 1.75; }
+.fcol ul { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+.fcol ul li a { color: #4a3a6a; font-size: 11px; }
+.fcol ul li a:hover { color: #9955cc; text-decoration: none; }
+
+#footer-copy {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 7px 8px;
+  text-align: center;
+  font-size: 10px;
+  color: #241c38;
+}
+
+#footer-copy a { color: #2e2448; }
+#footer-copy a:hover { color: #5a4a7a; text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div id="header">
+  <div id="header-content">
+    <a class="site-logo" href="#">
+      <img src="data:image/png;base64,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" alt="Evil Pongon Game" style="width:52px;height:52px;image-rendering:pixelated;">
+      <div class="site-logo-text">
+        <span class="site-name"><span class="evil">Evil</span> Pongon Game</span>
+        <span class="site-tagline">Free Indie Game &bull; Online Community</span>
+      </div>
+    </a>
+    <div class="header-login">
+      <label>Login</label>
+      <label>Username:</label>
+      <input type="text" placeholder="Username">
+      <label>Password:</label>
+      <input type="password" placeholder="Password">
+      <button class="btn-login">Login</button>
+      <span class="vsep">|</span>
+      <a href="#" onclick="showTab('register');return false;">Register</a>
+      <span class="vsep">|</span>
+      <label class="remember-wrap"><input type="checkbox">&nbsp;Remember me</label>
+      <span class="vsep">|</span>
+      <a href="#">Lost Password?</a>
+    </div>
+  </div>
+
+  <div id="navbar">
+    <ul>
+      <li><a href="#">Portal</a></li>
+      <li><a href="#">Forum</a></li>
+      <li>
+        <span>Evil Pongon Game<span class="nav-arrow">&#9660;</span></span>
+        <div class="nav-drop">
+          <div class="nav-drop-section">
+            <div class="nav-drop-label">Download</div>
+            <a href="#">Evil Pongon Game v2.4</a>
+            <a href="#">Evil Pongon Game v2.3 (Legacy)</a>
+            <a href="#">Mobile Beta</a>
+          </div>
+          <div class="nav-drop-section">
+            <div class="nav-drop-label">Info</div>
+            <a href="#">Patch Notes</a>
+            <a href="#">Game Guide</a>
+            <a href="#">Report a Bug</a>
+          </div>
+        </div>
+      </li>
+      <li>
+        <span>Community<span class="nav-arrow">&#9660;</span></span>
+        <div class="nav-drop">
+          <div class="nav-drop-section">
+            <a href="#">Official Wiki</a>
+            <a href="#">Fan Art Gallery</a>
+            <a href="#">Discord Server</a>
+          </div>
+        </div>
+      </li>
+      <li><a href="#">Member List</a></li>
+      <li><a href="#">View New Posts</a></li>
+      <li><a href="#">Today's Posts</a></li>
+    </ul>
+  </div>
+</div>
+
+<div id="page">
+
+  <div id="breadcrumb">
+    <a href="#">Evil Pongon Game Forums</a>
+    <span class="bsep">&rsaquo;</span>
+    <span class="bcur" id="crumb-label">Login</span>
+  </div>
+
+  <div id="online-bar">
+    <span class="dot">&#9679;</span>
+    312 users active in the past 15 minutes (5 members, 307 guests) &mdash;
+    <a href="#">pongKing99</a>, <a href="#">xXDarkPaddleXx</a>, <a href="#">evil_ball</a>, <a href="#">SlimePong</a>, <a href="#">retro_loop</a>
+  </div>
+
+  <div class="tabs">
+    <a class="tab on" id="tab-login" href="#" onclick="showTab('login');return false;">Login</a>
+    <a class="tab" id="tab-register" href="#" onclick="showTab('register');return false;">Register</a>
+  </div>
+
+  <div class="sec on" id="sec-login">
+    <div class="panel">
+      <div class="panel-hd"><span class="ico">&#9658;</span>Login</div>
+      <div class="panel-bd" style="padding:0;">
+        <table class="ftable">
+          <tr>
+            <td class="lbl">Username:</td>
+            <td class="fld"><input type="text" placeholder="Your username"></td>
+          </tr>
+          <tr>
+            <td class="lbl">Password:</td>
+            <td class="fld">
+              <input type="password" placeholder="Your password">
+              <div class="fnote">Passwords are case-sensitive. &nbsp;<a href="#">Lost your password?</a></div>
+            </td>
+          </tr>
+          <tr>
+            <td class="lbl">Remember me:</td>
+            <td class="fld"><label><input type="checkbox">&nbsp;Stay logged in on this computer</label></td>
+          </tr>
+        </table>
+      </div>
+      <div class="form-foot">
+        <button class="btn-sub">Login</button>
+        <a class="foot-link" href="#" onclick="showTab('register');return false;">Don't have an account? Register here &rsaquo;</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec" id="sec-register">
+    <div class="panel">
+      <div class="panel-hd"><span class="ico">&#9658;</span>Evil Pongon Game &mdash; Registration Agreement</div>
+      <div class="panel-bd">
+        <div class="agree-box">
+          Whilst we attempt to edit or remove any messages containing inappropriate, abusive, hateful, slanderous, or threatening material that could be considered invasive of a person's privacy, or which otherwise violate any kind of law, it is impossible for us to review every message posted on this discussion system. For this reason you acknowledge that all messages posted on this discussion system express the views and opinions of the original message author and not necessarily the views of this bulletin board. Therefore we take no responsibility and cannot be held liable for any messages posted. We do not vouch for or warrant the accuracy and completeness of every message.
+          <br><br>
+          By registering on this discussion system you agree that you will not post any material which is knowingly false, inaccurate, abusive, hateful, harassing, sexually orientated, threatening or invasive of a person's privacy, or any other material which may violate any applicable laws.
+          <br><br>
+          Failure to comply with these rules may result in the termination of your account, account suspension, or permanent ban of access to these forums. Your IP Address is recorded with each post you make on this discussion system and is retrievable by the forum staff if need-be. You agree that we have the ability and right to remove, edit, or lock any account or message at any time should it be seen fit. You also agree that any information you enter on this discussion system is stored in a database, and that "cookies" are stored on your computer to save your login information.
+          <br><br>
+          Any information you provide on these forums will not be disclosed to any third party without your complete consent, although the staff cannot be held liable for any hacking attempt in which your data is compromised.
+          <br><br>
+          <strong>By continuing with the registration process you agree to the above rules and any others that the Administrator specifies.</strong>
+        </div>
+        <div style="font-size:11px;color:#4a3a6a;">
+          <label><input type="checkbox">&nbsp;I have read, and agree to, the registration agreement above.</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-hd"><span class="ico">&#9658;</span>Registration Details</div>
+      <div class="panel-bd" style="padding:0;">
+        <table class="ftable">
+          <tr>
+            <td class="lbl">Username: <span class="req">*</span></td>
+            <td class="fld">
+              <input type="text" placeholder="Choose a username">
+              <div class="fnote">Between 3&ndash;25 characters. Letters, numbers, spaces, hyphens and underscores only.</div>
+            </td>
+          </tr>
+          <tr>
+            <td class="lbl">Password: <span class="req">*</span></td>
+            <td class="fld"><input type="password" placeholder="Choose a password"></td>
+          </tr>
+          <tr>
+            <td class="lbl">Confirm Password: <span class="req">*</span></td>
+            <td class="fld"><input type="password" placeholder="Confirm your password"></td>
+          </tr>
+          <tr>
+            <td class="lbl">Email Address: <span class="req">*</span></td>
+            <td class="fld">
+              <input type="email" placeholder="Your email address">
+              <div class="fnote">A valid email address is required for account activation.</div>
+            </td>
+          </tr>
+          <tr>
+            <td class="lbl">Confirm Email: <span class="req">*</span></td>
+            <td class="fld"><input type="email" placeholder="Confirm your email address"></td>
+          </tr>
+        </table>
+      </div>
+      <div class="form-foot">
+        <button class="btn-sub">Complete Registration</button>
+        <span class="foot-note"><span class="req">*</span> Required fields</span>
+        <a class="foot-link" href="#" onclick="showTab('login');return false;">Already have an account? Login &rsaquo;</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="footer">
+  <div id="footer-cols">
+    <div class="fcol">
+      <h4>About Us</h4>
+      <p>We make games for everyone to enjoy.<br>Plan, make, play!</p>
+    </div>
+    <div class="fcol">
+      <h4>Social</h4>
+      <ul>
+        <li><a href="#">&#9658; Facebook</a></li>
+        <li><a href="#">&#9658; YouTube</a></li>
+        <li><a href="#">&#9658; Discord</a></li>
+        <li><a href="#">&#9658; Patreon</a></li>
+      </ul>
+    </div>
+    <div class="fcol">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="#">Forum</a></li>
+        <li><a href="#">Home / Portal</a></li>
+        <li><a href="#">Search</a></li>
+        <li><a href="#">Help</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="footer-copy">
+    Powered by <a href="#">MyBB</a>, &copy; 2002&ndash;2024 <a href="#">MyBB Group</a>.
+    Theme designed by <a href="#">m0ckingbird</a> &copy; 2015&ndash;2024.
+    &nbsp;|&nbsp; Evil Pongon Game &copy; 2018 ZeoWorks
+  </div>
+</div>
+
+<script>
+function showTab(tab) {
+  var isLogin = tab === 'login';
+  document.getElementById('sec-login').className = 'sec' + (isLogin ? ' on' : '');
+  document.getElementById('sec-register').className = 'sec' + (!isLogin ? ' on' : '');
+  document.getElementById('tab-login').className = 'tab' + (isLogin ? ' on' : '');
+  document.getElementById('tab-register').className = 'tab' + (!isLogin ? ' on' : '');
+  document.getElementById('crumb-label').textContent = isLogin ? 'Login' : 'Register';
+}
+</script>
+
+</body>
+</html>
